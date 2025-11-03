@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Puppy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables de color vibrantes */
+        :root {
+            --primary: #FF6B35;     /* Naranja vibrante */
+            --secondary: #FFD23F;   /* Amarillo dorado */
+            --accent: #3BCEAC;      /* Verde lima */
+            --dark: #2D1B3D;        /* Morado oscuro elegante */
+            --light: #FFF8F0;       /* Fondo claro cálido */
+            --text: #333;
+            --shadow: 0 10px 30px rgba(255, 107, 53, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header fijo con fondo suave */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.6rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.6rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section - Más alegre */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: url('./lindo-mascota-collage-aislado.jpg') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1568572933382-74dcdc215e54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.417);
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(59, 206, 172, 0.3);
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Productos - Catálogo limpio */
+        .products {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 25px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .product-image {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .product-image i {
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .product-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin: 15px 0 10px;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Catálogo de productos con cards horizontales */
+        .catalog {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f9f9fb 0%, #ffffff 100%);
+        }
+
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-container {
+            position: relative;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-select {
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-select:hover {
+            background: var(--secondary);
+        }
+
+        .filter-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 300px;
+            z-index: 10;
+            margin-top: 10px;
+        }
+
+        .filter-options.active {
+            display: flex;
+        }
+
+        .filter-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: var(--transition);
+            width: 70px;
+        }
+
+        .filter-option:hover {
+            background: rgba(255, 210, 63, 0.2);
+        }
+
+        .filter-option.active {
+            background: var(--secondary);
+        }
+
+        .filter-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .filter-option.active .filter-icon {
+            color: white;
+        }
+
+        .filter-label {
+            font-size: 0.7rem;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .filter-option.active .filter-label {
+            color: white;
+        }
+
+        .catalog-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .catalog-card {
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .catalog-card-image {
+            width: 200px;
+            min-width: 200px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           /*  padding: 10px; */
+        }
+
+        .catalog-card-image i {
+            font-size: 5rem;
+            color: white;
+        }
+
+        .catalog-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .catalog-card-header {
+            margin-bottom: 15px;
+        }
+
+        .catalog-card-title {
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .catalog-card-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .catalog-card-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .catalog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .catalog-card-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .catalog-card-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(59, 206, 172, 0.3);
+        }
+
+        .catalog-card-btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* About Section - Simplificada */
+        .about {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f9f9fb 0%, #ffffff 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Footer simple */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .social-links {
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.4rem;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Botón flotante de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Animación flotante */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                display: none;
+            }
+            .nav-links.active { display: flex; }
+            .hero h1 { font-size: 2.3rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .catalog-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .filter-container {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .filter-options {
+                width: 100%;
+                right: 0;
+            }
+            .catalog-card {
+                flex-direction: column;
+            }
+            .catalog-card-image {
+                width: 100%;
+                min-width: 100%;
+                height: 200px;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <img src="./logohappypuppy.png" alt="Logo" style="height:100px; border-radius:50%; margin-right:10px;">
+                    Happy Puppy
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                </ul>
+                <div class="hamburger"><i class="fas fa-bars"></i></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Snacks 100% Naturales para tu Perro</h1>
+                <p>Deshidratados con amor, sin conservantes ni aditivos. Solo lo mejor para tu mejor amigo.</p>
+                <a href="#catalogo" class="btn">Ver Catálogo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section class="products" id="productos">
+        <div class="container">
+            <h2 class="section-title">Nuestros Snacks</h2>
+            <p class="section-subtitle">Productos naturales, deshidratados lentamente para conservar sabor y nutrientes.</p>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image"><i class="fas fa-bone"></i></div>
+                    <h3>Patitas de Res</h3>
+                    <p>Ricas en colágeno natural. Ideales para articulaciones y salud dental.</p>
+                    <span class="tag">Salud Dental</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><i class="fas fa-drumstick-bite"></i></div>
+                    <h3>Mollejas de Pollo</h3>
+                    <p>Altas en proteínas y taurina. Perfectas como premio diario.</p>
+                    <span class="tag">Energía Diaria</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><i class="fas fa-heart"></i></div>
+                    <h3>Hígados de Res</h3>
+                    <p>Fuente natural de hierro y vitaminas A, B y D.</p>
+                    <span class="tag">Vitaminas</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image"><i class="fas fa-ring"></i></div>
+                    <h3>Tráquea de Res</h3>
+                    <p>Crunch natural que limpia dientes y fortalece encías.</p>
+                    <span class="tag">Limpieza Dental</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo -->
+    <section class="catalog" id="catalogo">
+        <div class="container">
+            <div class="catalog-header">
+                <h2 class="section-title">Catálogo Completo</h2>
+                <div class="filter-container">
+                    <div class="filter-select" id="filterToggle">
+                        <i class="fas fa-filter"></i>
+                        Filtrar por tipo
+                    </div>
+                    <div class="filter-options" id="filterOptions">
+                        <div class="filter-option active" data-filter="all">
+                            <i class="fas fa-paw filter-icon"></i>
+                            <span class="filter-label">Todos</span>
+                        </div>
+                        <div class="filter-option" data-filter="bone">
+                            <i class="fas fa-bone filter-icon"></i>
+                            <span class="filter-label">Huesos</span>
+                        </div>
+                        <div class="filter-option" data-filter="meat">
+                            <i class="fas fa-drumstick-bite filter-icon"></i>
+                            <span class="filter-label">Carnes</span>
+                        </div>
+                        <div class="filter-option" data-filter="organ">
+                            <i class="fas fa-heart filter-icon"></i>
+                            <span class="filter-label">Vísceras</span>
+                        </div>
+                        <div class="filter-option" data-filter="treat">
+                            <i class="fas fa-cookie-bite filter-icon"></i>
+                            <span class="filter-label">Premios</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="catalog-grid" id="catalogGrid">
+                <!-- Producto 1 -->
+                <div class="catalog-card" data-category="bone">
+                    <div class="catalog-card-image">
+                        <img src="./patitas.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" alt="Patitas de Pollo">
+                       <!--  <i class="fas fa-bone"></i> -->
+                    </div>
+                    <div class="catalog-card-content">
+                        <div class="catalog-card-header">
+                            <h3 class="catalog-card-title">Patitas de Pollo</h3>
+                            <p class="catalog-card-description">Ricas en colágeno natural, ideales para la salud de las articulaciones y la limpieza dental de tu perro. Deshidratadas lentamente para conservar todos los nutrientes.</p>
+                            <div class="catalog-card-tags">
+                                <span class="tag">Salud Dental</span>
+                                <span class="tag">Articulaciones</span>
+                            </div>
+                        </div>
+                        <div class="catalog-card-footer">
+                            <div class="catalog-card-price">$48.00</div>
+                            <button class="catalog-card-btn" onclick="openWhatsApp('Patitas de Pollo', 48.00)">Pedir por Whatsapp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="catalog-card" data-category="meat">
+                    <div class="catalog-card-image">
+                        <img src="./mollejasCH.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" alt="Patitas de Pollo">
+
+                       <!--  <i class="fas fa-drumstick-bite"></i> -->
+                    </div>
+                    <div class="catalog-card-content">
+                        <div class="catalog-card-header">
+                            <h3 class="catalog-card-title">Mollejas de Pollo</h3>
+                            <p class="catalog-card-description">Altas en proteínas y taurina, perfectas como premio diario para mantener a tu perro activo y saludable. Sin conservantes ni aditivos artificiales.</p>
+                            <div class="catalog-card-tags">
+                                <span class="tag">Energía Diaria</span>
+                                <span class="tag">Proteína</span>
+                            </div>
+                        </div>
+                        <div class="catalog-card-footer">
+                            <div class="catalog-card-price">$48.00</div>
+                            <button class="catalog-card-btn" onclick="openWhatsApp('Mollejas de Pollo', 48.00)">Pedir por Whatsapp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="catalog-card" data-category="organ">
+                    <div class="catalog-card-image">
+                       <!--  <i class="fas fa-heart"></i> -->
+                        <img src="./Higado.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" alt="Patitas de Pollo">
+
+                    </div>
+                    <div class="catalog-card-content">
+                        <div class="catalog-card-header">
+                            <h3 class="catalog-card-title">Hígados de Pollo</h3>
+                            <p class="catalog-card-description">Fuente natural de hierro y vitaminas A, B y D. Un snack nutritivo que favorece la salud ocular, la piel y el pelaje de tu mascota.</p>
+                            <div class="catalog-card-tags">
+                                <span class="tag">Vitaminas</span>
+                                <span class="tag">Nutritivo</span>
+                            </div>
+                        </div>
+                        <div class="catalog-card-footer">
+                            <div class="catalog-card-price">$35</div>
+                            <button class="catalog-card-btn" onclick="openWhatsApp('Hígados de Pollo', 35.00)">Pedir por Whatsapp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 7 -->
+                <div class="catalog-card" data-category="meat">
+                    <div class="catalog-card-image">
+                      <img src="./mixto.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" alt="Patitas de Pollo">
+
+                       <!--  <i class="fas fa-drumstick-bite"></i> -->
+                    </div>
+                    <div class="catalog-card-content">
+                        <div class="catalog-card-header">
+                            <h3 class="catalog-card-title">Mixto 150gr</h3>
+                            <p class="catalog-card-description">Nutrientes y vitaminas, al mismo tiempo que un premio para tu mascota</p>
+                            <div class="catalog-card-tags">
+                                <span class="tag">Piel y Pelaje</span>
+                                <span class="tag">Vitamina A y B</span>
+                            </div>
+                        </div>
+                        <div class="catalog-card-footer">
+                            <div class="catalog-card-price">$89.00</div>
+                            <button class="catalog-card-btn" onclick="openWhatsApp('Mixto 150gr', 89.00)">Pedir por Whatsapp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>¿Por qué elegirnos?</h2>
+                    <p>En <strong>Happy Puppy Dog Brus</strong> creemos que tu perro merece snacks tan naturales como el amor que le das.</p>
+                    <p>Deshidratamos a baja temperatura para conservar hasta el <strong>98% de los nutrientes</strong>. Sin sal, sin azúcar, sin químicos.</p>
+                    <p>Hecho con ingredientes de granjas locales y mucho cariño.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Proceso natural">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Happy Puppy Dog Brus</strong> • Snacks Naturales Deshidratados</p>
+            <p>Happy puppy Dog brus | +52 5636597720</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/525636597720" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.8rem;">&copy; 2025 Happy Puppy. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/525636597720" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Menú móvil
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Cerrar menú al hacer clic en enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Filtro de productos
+        const filterToggle = document.getElementById('filterToggle');
+        const filterOptions = document.getElementById('filterOptions');
+        const filterButtons = document.querySelectorAll('.filter-option');
+        const catalogCards = document.querySelectorAll('.catalog-card');
+
+        // Mostrar/ocultar opciones de filtro
+        filterToggle.addEventListener('click', () => {
+            filterOptions.classList.toggle('active');
+        });
+
+        // Filtrar productos
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filterValue = button.getAttribute('data-filter');
+                
+                // Actualizar botones activos
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filtrar productos
+                catalogCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Cerrar el menú de filtros
+                filterOptions.classList.remove('active');
+            });
+        });
+
+        // Cerrar filtros al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!filterToggle.contains(e.target) && !filterOptions.contains(e.target)) {
+                filterOptions.classList.remove('active');
+            }
+        });
+
+        // Función para abrir WhatsApp con mensaje predefinido
+        function openWhatsApp(productName, price) {
+            const phoneNumber = "525636597720";
+            const message = `¡Hola! Me interesa comprar el producto: ${productName} por $${price.toFixed(2)}. ¿Podrían darme más información?`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+</html>
